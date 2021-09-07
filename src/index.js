@@ -17,18 +17,17 @@ const localStorageValue = localStorage.getItem('Theme')
 //check Local Storage 
 if (localStorageValue==='dark-theme') {
   refInput.checked = false
-  refBody.classList.add(Theme.DARK)
+  addClass(Theme.DARK)
 } else {
- refBody.classList.add(Theme.LIGHT) 
+  addClass(Theme.LIGHT)
 }
+
 //theme switcher
 refCheckBox.addEventListener('change', e => {
   if (e.target.nodeName!=='INPUT') {
     return
   }
-  refBody.classList.toggle(Theme.LIGHT)
-  refBody.classList.toggle(Theme.DARK)
-
+  removeValue(Theme.LIGHT, Theme.DARK)
   if (refBody.className==='dark-theme') {
    localStorage.setItem('Theme', 'dark-theme') 
   }else{
@@ -38,4 +37,12 @@ refCheckBox.addEventListener('change', e => {
 })
 //templating and gallery parsing
 const markup = dishesCards(menu);
-refMenu.insertAdjacentHTML('beforeend',markup)
+refMenu.insertAdjacentHTML('beforeend', markup)
+
+function addClass(color) {
+  refBody.classList.add(color)
+}
+function removeValue(light, dark) {
+  refBody.classList.toggle(light)
+  refBody.classList.toggle(dark)
+}
