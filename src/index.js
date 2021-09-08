@@ -12,15 +12,10 @@ const refCheckBox = refBody.querySelector('.theme-switch__control')
 const refInput = refCheckBox.querySelector('.theme-switch__toggle')
 const refMenu = refBody.querySelector('.js-menu');
 
-refInput.setAttribute("checked", "true")
-const localStorageValue = localStorage.getItem('Theme')
-//check Local Storage 
-if (localStorageValue==='dark-theme') {
-  refInput.checked = false
-  addClass(Theme.DARK)
-} else {
-  addClass(Theme.LIGHT)
-}
+const localStorageValue = localStorage.getItem('Theme') || Theme.LIGHT
+refInput.setAttribute("checked", "false")
+refInput.checked = localStorageValue === Theme.DARK
+addClass(localStorageValue)
 
 //theme switcher
 refCheckBox.addEventListener('change', e => {
@@ -28,7 +23,7 @@ refCheckBox.addEventListener('change', e => {
     return
   }
   removeValue(Theme.LIGHT, Theme.DARK)
-  if (refBody.className==='dark-theme') {
+  if (e.target.checked) {
    localStorage.setItem('Theme', 'dark-theme') 
   }else{
     localStorage.removeItem('Theme')
